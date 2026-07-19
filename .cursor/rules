@@ -1,0 +1,90 @@
+# QuasarEdu — Cursor AI Rules
+# Scholarship Management System
+# Project QuasarX
+
+## Project Purpose
+Full-stack web application for end-to-end scholarship management for educational institutions.
+
+## Tech Stack
+- Frontend: React 18, React Router v6, Tailwind CSS
+- Backend: Node.js 20 LTS, Express.js
+- Database: MySQL 8 — raw SQL queries only, no ORM
+- AI/OCR: Google Gemini 2.5 Flash API (document auto-fill + chatbot)
+- PDF: Puppeteer (application receipts with QR code)
+- QR: qrcode npm package
+- Auth: JWT (jsonwebtoken) + bcrypt
+- Email: Nodemailer with Gmail SMTP
+- File uploads: Multer (whitelist: .pdf, .jpg, .jpeg, .png only)
+
+## Project Structure
+client/src/pages/         Student and Admin pages
+client/src/components/    Reusable UI components
+client/src/services/      API call functions (axios)
+server/routes/            One file per resource: auth, students, scholarships, applications, admin
+server/controllers/       Business logic separated from routes
+server/middleware/         auth.js, upload.js, rateLimiter.js
+server/db/                MySQL connection pool (mysql2)
+database/                 schema.sql, stored-procedures.sql, seed.sql
+
+## Database Entities (10 tables, all in 3NF)
+Users, Students, Scholarships, Applications, Documents,
+Notifications, SavedScholarships, IdentityVerificationTokens,
+FingerprintVerificationTokens, ApplicationDocuments
+
+## Key Business Rules
+- A student may apply once per scholarship; re-apply only after Rejected or Withdrawn
+- Application submission requires: profile complete (13 fields) + identity verified
+- Identity verification = face selfie + fingerprint/biometric/PIN via secure token link
+- Eligibility filters: MinimumCGPA, MaxFamilyIncome, DegreeProgram, SemesterYear
+- OTP: 6-digit, 5-minute expiry, max 3 attempts
+- Brute-force: 15-minute lockout after 5 failed login attempts (students only)
+- Verification tokens: 64-char hex, single-use, 1-hour expiry, atomic claim
+- File uploads: whitelist .pdf .jpg .jpeg .png only
+
+## Application Status Values
+Pending | Approved | Rejected | Withdrawn | Draft
+
+## Roles
+Student | Admin
+
+## Coding Conventions
+- Use async/await throughout, no callbacks
+- All DB queries use parameterized statements (mysql2 ? placeholders) — never string concatenation
+- Controllers return consistent JSON: { success: true, data: ... } or { success: false, message: ... }
+- HTTP status codes: 200, 201, 400, 401, 403, 404, 500
+- JWT stored in httpOnly cookie, not localStorage
+- All routes under /api/v1/
+- Student routes protected by auth middleware checking role === 'Student'
+- Admin routes protected by auth middleware checking role === 'Admin'
+- Multer stores files as: email_documentType_timestamp.ext
+- Use dotenv for all secrets — never hardcode credentials
+
+## Frontend Conventions
+- Tailwind only for styling
+- Component names: PascalCase
+- File names: kebab-case
+- API calls go in /services/ files, not inside components
+- React Router v6 for all navigation
+- Toast notifications for all success/error feedback
+- Color palette: teal (#0E7490) primary, white backgrounds, color-coded status badges
+
+## Pages to Build
+- /login
+- /register → /verify-otp
+- /forgot-password
+- /dashboard (student)
+- /profile (tabs: Personal, Academic, Address, Education, Documents)
+- /scholarships/:id/apply
+- /my-applications
+- /notifications
+- /admin/dashboard
+- /admin/applications/:id/review
+- /admin/scholarships/new and /:id/edit
+- /admin/students
+- Floating chatbot widget on all student pages
+
+## Do Not
+- Do not use an ORM — raw mysql2 queries only
+- Do not store JWT in localStorage — httpOnly cookies only
+- Do not skip parameterized queries on any DB call
+- Do not allow file uploads outside the whitelist
