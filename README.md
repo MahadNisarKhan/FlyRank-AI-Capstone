@@ -1,5 +1,7 @@
 # QuasarEdu — Scholarship Management System
 
+> **Status:** Implementation in progress. Application code (client, server, database) coming soon.
+
 A full-stack web application that digitizes the end-to-end lifecycle of student scholarship applications — from registration and profile building, to eligibility discovery, application submission, admin review, and PDF receipt generation.
 
 ## Overview
