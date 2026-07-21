@@ -40,6 +40,9 @@ FingerprintVerificationTokens, ApplicationDocuments
 - Brute-force: 15-minute lockout after 5 failed login attempts (students only)
 - Verification tokens: 64-char hex, single-use, 1-hour expiry, atomic claim
 - File uploads: whitelist .pdf .jpg .jpeg .png only
+- CGPA range: 0.0 – 4.0 (Pakistani grading scale) — empty value must fail validation, not pass silently
+- Semester range: 1–8 for BS, 1–4 for MS
+- Family income: PKR, positive number only
 
 ## Application Status Values
 Pending | Approved | Rejected | Withdrawn | Draft
@@ -67,6 +70,10 @@ Student | Admin
 - React Router v6 for all navigation
 - Toast notifications for all success/error feedback
 - Color palette: teal (#0E7490) primary, white backgrounds, color-coded status badges
+- All forms use react-hook-form + zodResolver — never raw useState for form state, never uncontrolled inputs
+- Numeric fields (CGPA, income, semester) must use z.coerce.number() in zod schema — submitted data must be typed correctly, not raw strings
+- Every input must have: <label htmlFor> matching input id, aria-describedby linking to error element, aria-invalid, and errors must have role="alert"
+- Validation mode: onBlur for field errors, first invalid field gets focus on submit via setFocus()
 
 ## Pages to Build
 - /login
@@ -88,3 +95,6 @@ Student | Admin
 - Do not store JWT in localStorage — httpOnly cookies only
 - Do not skip parameterized queries on any DB call
 - Do not allow file uploads outside the whitelist
+- Do not use useState for form field values — use react-hook-form
+- Do not add fields, components, or features not explicitly in the spec — scope creep from AI output must be caught in review
+- Do not skip tests after generating a form or component — always request Vitest tests in the same prompt
