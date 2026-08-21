@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base layer overrides ────────────────────────────────────── */
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+  }
+  body {
+    @apply bg-surface-muted text-slate-800 font-sans;
+  }
+  h1 { @apply text-3xl font-bold tracking-tight; }
+  h2 { @apply text-2xl font-semibold tracking-tight; }
+  h3 { @apply text-xl font-semibold; }
+}
+
+/* ── Component shortcuts ────────────────────────────────────── */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           rounded-card bg-brand-500 px-4 py-2 text-sm font-medium text-white
+           shadow-sm transition hover:bg-brand-600 active:scale-95
+           disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2
+           rounded-card border border-surface-border bg-white px-4 py-2
+           text-sm font-medium text-slate-700 shadow-sm transition
+           hover:bg-surface-muted active:scale-95
+           disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .card {
+    @apply rounded-card bg-white shadow-card border border-surface-border p-5;
+  }
+  .badge-high   { @apply inline-flex rounded-badge bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700; }
+  .badge-medium { @apply inline-flex rounded-badge bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700; }
+  .badge-low    { @apply inline-flex rounded-badge bg-red-100   px-2 py-0.5 text-xs font-medium text-red-700; }
+  .badge-pending  { @apply inline-flex rounded-badge bg-blue-100  px-2 py-0.5 text-xs font-medium text-blue-700; }
+  .badge-approved { @apply inline-flex rounded-badge bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700; }
+  .badge-rejected { @apply inline-flex rounded-badge bg-red-100   px-2 py-0.5 text-xs font-medium text-red-700; }
+
+  .page-header {
+    @apply mb-6 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between;
+  }
+  .input {
+    @apply w-full rounded-card border border-surface-border bg-white px-3 py-2
+           text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2
+           focus:ring-brand-400 transition;
+  }
+  .label {
+    @apply mb-1 block text-sm font-medium text-slate-700;
+  }
+}

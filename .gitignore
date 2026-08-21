@@ -1,35 +1,28 @@
-# Dependencies
-node_modules/
-.npm
+# ── Dependencies ──────────────────────────────────────────────
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
 
-# Environment variables
+# ── Next.js ───────────────────────────────────────────────────
+/.next/
+/out/
+
+# ── Production ────────────────────────────────────────────────
+/build
+
+# ── 🔐 SECRETS — NEVER COMMIT ────────────────────────────────
 .env
 .env.local
-.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+# .env.example is safe to commit ↑ (no real values)
 
-# Build output
-dist/
-build/
-client/dist/
-client/build/
-
-# Logs
-logs/
-*.log
+# ── Misc ──────────────────────────────────────────────────────
 npm-debug.log*
-
-# Uploads (user data)
-server/uploads/
-uploads/
-
-# OS files
+yarn-debug.log*
+yarn-error.log*
 .DS_Store
-Thumbs.db
-
-# Editor
-.vscode/
-*.suo
-*.user
-
-# Coverage
-coverage/
+*.pem
+.vercel

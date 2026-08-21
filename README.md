@@ -1,114 +1,102 @@
 # QuasarEdu — Scholarship Management System
 
-> **Status:** Implementation in progress. Application code (client, server, database) coming soon.
+> **Status:** Next.js scaffold live. API integrations (MySQL, Gemini, Nodemailer) coming in subsequent milestones.
 
-A full-stack web application that digitizes the end-to-end lifecycle of student scholarship applications — from registration and profile building, to eligibility discovery, application submission, admin review, and PDF receipt generation.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/MahadNisarKhan/FlyRank-AI-Capstone-Intership)
 
-## Overview
+## Live URLs
+| Environment | URL |
+|---|---|
+| Preview (latest `main`) | _add after first deploy_ |
+| Health check | `<preview-url>/health` |
+| Health JSON | `<preview-url>/api/health` |
 
-QuasarEdu replaces manual, error-prone scholarship workflows with a complete digital system. Students discover eligible scholarships, apply in one click, track status in real time, and download PDF receipts. Admins manage scholarships, review applications, and broadcast notifications from a single dashboard.
+## Screens (all routed)
 
-## Features
+| Route | Description |
+|---|---|
+| `/` | Landing page |
+| `/login` | Student + Admin login |
+| `/register` | Multi-step student registration |
+| `/student/dashboard` | Student home & KPIs |
+| `/student/scholarships` | Scholarship discovery + eligibility filter |
+| `/student/scholarships/[id]` | Scholarship detail + eligibility check |
+| `/student/applications` | Application tracker |
+| `/student/profile` | Profile viewer |
+| `/student/notifications` | Inbox |
+| `/student/chatbot` | Gemini AI assistant |
+| `/admin/dashboard` | Admin KPIs + charts |
+| `/admin/scholarships` | Scholarship CRUD list |
+| `/admin/scholarships/new` | Create scholarship |
+| `/admin/scholarships/[id]/edit` | Edit scholarship |
+| `/admin/applications` | Review & approve/reject |
+| `/admin/students` | Student directory |
+| `/admin/notifications` | Broadcast notifications |
+| `/health` | Health check page (Server Component, fetches live data) |
+| `/api/health` | Health check JSON API |
 
-### Student Portal
-- Register with email OTP verification (6-digit, 5-min expiry, max 3 attempts)
-- Brute-force protection: 15-minute lockout after 5 failed login attempts
-- Comprehensive profile builder: personal, academic (SSC/HSSC/university), and financial data
-- Smart scholarship discovery — eligibility engine filters by CGPA, family income, degree program, and semester
-- Color-coded eligibility ratings (High / Medium / Low match)
-- One-click scholarship application with optional personal statement
-- Save/bookmark scholarships for later
-- Withdraw pending applications and reapply after rejection or withdrawal
-- AI-powered document Auto Fill using Google Gemini Vision
-- PDF application receipt with embedded QR code
-- Real-time status tracking: Pending / Approved / Rejected / Withdrawn
-- In-app notifications and toast alerts
-- QuasarEdu Assistant chatbot (Gemini-powered, scholarship topics only, supports Urdu)
-- Identity verification via face selfie + fingerprint/biometric/PIN before applying
-
-### Admin Portal
-- Dashboard with live KPI tiles: total scholarships, total applications, pending reviews, approval rate
-- Pie chart for application status distribution
-- Full CRUD for scholarship programs with dynamic eligibility rules
-- Application review: approve or reject with mandatory comments
-- Filterable student list with popup profile view
-- Document viewer for uploaded transcripts and proofs
-- System-wide notification broadcasting
-- Audit trail for all admin decisions
-
-### Security
-- Role-based access control (Student / Admin)
-- BCrypt password hashing
-- JWT session tokens
-- Parameterized queries (SQL injection prevention)
-- File upload whitelist: `.pdf`, `.jpg`, `.jpeg`, `.png`
-- 64-char hex tokens, single-use, 1-hour expiry for verification links
-- OTP: 5-minute expiry, max 3 attempts
-
-## Tech Stack
+## Tech Stack (this scaffold)
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 18, React Router v6, Tailwind CSS |
-| Backend | Node.js 20 LTS, Express.js |
-| Database | MySQL 8 (raw SQL, no ORM) |
-| AI / OCR | Google Gemini 2.5 Flash API |
-| PDF | Puppeteer |
-| QR Code | qrcode (npm) |
-| Auth | JWT (jsonwebtoken) + bcrypt |
-| Email | Nodemailer (Gmail SMTP) |
-| File Uploads | Multer |
+| Framework | Next.js 14, App Router, TypeScript |
+| Styling | Tailwind CSS 3 + custom design tokens |
+| Server | Node.js (Vercel serverless) |
+| Deployment | Vercel (preview on every push) |
 
-## Database Entities
-
-10 entities in 3NF:
-
-`Users` · `Students` · `Scholarships` · `Applications` · `Documents` · `Notifications` · `SavedScholarships` · `IdentityVerificationTokens` · `FingerprintVerificationTokens` · `ApplicationDocuments`
-
-## Project Structure
-FlyRank-AI-Capstone/
-├── client/               # React frontend
-│   ├── src/
-│   │   ├── pages/        # Student and Admin pages
-│   │   ├── components/   # Reusable UI components
-│   │   └── services/     # API call functions
-├── server/               # Express backend
-│   ├── routes/           # auth, students, scholarships, applications, admin
-│   ├── controllers/      # Business logic
-│   ├── middleware/        # auth.js, upload.js, rateLimiter.js
-│   └── db/               # MySQL connection pool
-├── database/             # SQL schema, stored procedures, seed data
-└── docs/                 # Documentation and assets
-
-## Getting Started
+## Quick Start
 
 ```bash
-# Clone the repo
-git clone https://github.com/MahadNisarKhan/FlyRank-AI-Capstone.git
-cd FlyRank-AI-Capstone
-
-# Backend setup
-cd server
+git clone https://github.com/MahadNisarKhan/FlyRank-AI-Capstone-Intership.git
+cd FlyRank-AI-Capstone-Intership
 npm install
-cp .env.example .env
+cp .env.example .env.local   # fill in values — NEVER commit .env.local
 npm run dev
-
-# Frontend setup (new terminal)
-cd client
-npm install
-npm run dev
+# → http://localhost:3000
 ```
 
-## Environment Variables
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=yourpassword
-DB_NAME=quasaredu
-JWT_SECRET=your_jwt_secret
-GEMINI_API_KEY=your_gemini_key
-EMAIL_USER=your_gmail
-EMAIL_PASS=your_app_password
+## Deploy to Vercel
+
+1. Push this code to `main` on GitHub (instructions below).
+2. Go to [vercel.com/new](https://vercel.com/new) → **Import** your GitHub repo.
+3. Vercel auto-detects Next.js — click **Deploy**. Done.
+4. Every subsequent push to any branch gets a preview URL automatically.
+
+### Environment Variables on Vercel
+
+In **Vercel Dashboard → Your Project → Settings → Environment Variables**, add:
+
+| Key | Example Value |
+|---|---|
+| `NEXT_PUBLIC_APP_URL` | `https://your-app.vercel.app` |
+| `DATABASE_URL` | `mysql://...` |
+| `JWT_SECRET` | _(64-char hex)_ |
+| `GEMINI_API_KEY` | `AIza...` |
+| `EMAIL_USER` | `you@gmail.com` |
+| `EMAIL_PASS` | _(Gmail App Password)_ |
+
+> ⚠️ Never put real secrets in `.env.example` or commit a `.env` / `.env.local` file.
+
+## Push this scaffold to your existing repo
+
+```bash
+# If starting fresh inside the repo:
+git add .
+git commit -m "feat: Next.js scaffold — all routes, Tailwind tokens, health check, Vercel config"
+git push origin main
+```
+
+## Design Tokens (tailwind.config.ts)
+
+| Token | Value |
+|---|---|
+| Primary | `brand-500` → `#6366f1` (indigo) |
+| Accent / Approved | `accent.green` → `#10b981` |
+| Accent / High match | `accent` → `#f59e0b` |
+| Rejected / Error | `accent.red` → `#ef4444` |
+| Card shadow | `shadow-card` |
+| Breakpoints | `xs: 375px`, `xl: 1280px` |
 
 ## License
 
-MIT © 2026 Project QuasarX
+MIT © 2026 QuasarEdu / FlyRank AI Capstone
