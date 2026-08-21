@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   description:
     "QuasarEdu — Scholarship Management System. Discover, apply, and track scholarships.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
-  ),
+  process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+),
 };
 
 export default function RootLayout({
